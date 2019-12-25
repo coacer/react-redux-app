@@ -1,21 +1,29 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { delTodo } from "../actions/todo";
+import { delTodo, fetchTodos } from "../actions/todo";
 
-const TodoList = (props) => {
-  console.log(props);
-  const todos = props.todos.map(todo => {
+class TodoList extends React.Component {
+  componentWillMount() {
+    this.props.fetchTodos();
+  }
+
+  render() {
+    console.log(this.props.todos);
+    const todos = this.props.todos.map(todo => {
+      return (
+        <div key={ todo.id }>
+          <span>{ todo.id } / { todo.title } / { todo.content }</span>
+          <button onClick={ () => this.props.delTodo(todo.id) }>Delete</button>
+        </div>
+      );
+    });
     return (
-      <div key={ todo.id }>
-        <span>{ todo.id } / { todo.title } / { todo.content }</span>
-        <button onClick={ () => props.delTodo(todo.id) }>Delete</button>
+      <div>
+        { todos }
       </div>
     );
-  });
-  return (
-    <div>{ todos }</div>
-  );
-};
+  }
+}
 
 const mapStateToProps = (state) => {
   return {
@@ -25,7 +33,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    delTodo: id => dispatch(delTodo(id))
+    delTodo: id => dispatch(delTodo(id)),
+    fetchTodos: () => dispatch(fetchTodos())
   };
 };
 

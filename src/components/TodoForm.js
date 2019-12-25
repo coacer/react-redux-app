@@ -6,30 +6,23 @@ class TodoForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newTitle: '',
-      newContent: '',
+      title: '',
+      content: '',
     };
   }
 
   handleChange(e) {
-    switch (e.target.name) {
-      case "title":
-        this.setState({ newTitle: e.target.value });
-        break;
-      case "content":
-        this.setState({ newContent: e.target.value });
-        break;
-      default:
-        break;
-    }
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({ [name]: value });
   }
 
   addTodo(e) {
     e.preventDefault();
-    this.props.addTodo(this.state.newTitle, this.state.newContent);
+    this.props.addTodo(this.state.title, this.state.content);
     this.setState({
-      newTitle: '',
-      newContent: '',
+      title: '',
+      content: '',
     });
   }
 
@@ -41,7 +34,7 @@ class TodoForm extends React.Component {
           <input
             name="title"
             type="text"
-            value={ this.state.newTitle }
+            value={ this.state.title }
             onChange={ this.handleChange.bind(this) }
           />
         </label>
@@ -51,7 +44,7 @@ class TodoForm extends React.Component {
           <input
             name="content"
             type="text"
-            value={ this.state.newContent }
+            value={ this.state.content }
             onChange={ this.handleChange.bind(this) }
           />
         </label>

@@ -18,9 +18,9 @@ class TodoList extends React.Component {
       );
     });
     return (
-      <div>
+      <>
         { todos }
-      </div>
+      </>
     );
   }
 }
